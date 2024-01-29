@@ -4,18 +4,25 @@ class Solution
     //be performed in a meeting room.
     public static int maxMeetings(int start[], int end[], int n)
     {
+        //if there one or less schedules it will the answer itself
         if(n<=1)return n;
+        //create an 2d array every row has 0 index with indes and 1st index with start time and 2nd index with end time.
         int arr[][]=new int[n][3];
         for(int i=0;i<n;i++){
             arr[i][0]=i;
             arr[i][1]=start[i];
             arr[i][2]=end[i];
         }
+        //sort the Array on the bases arr[i][2] i mean second indexed column. 
         Arrays.sort(arr,Comparator.comparingDouble(o ->o[2]));
+        
         int count=1;
+        //initialize first end timing and store in a variable
         int prevEnd = arr[0][2];
         for(int i=1;i<n;i++){
+            //take starting time
             int currStart = arr[i][1];
+            // if starting time is greater than previous end time then increase count by one and change precend with current end arr[i][2].
             if(currStart>prevEnd){
                 count++;
                 prevEnd = arr[i][2];
