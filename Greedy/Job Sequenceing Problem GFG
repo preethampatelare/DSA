@@ -3,20 +3,30 @@ class Solution
     //Function to find the maximum profit and the number of jobs done.
     int[] JobScheduling(Job arr[], int n)
     {
+        // first try to sort the Array on the bases of profit.
         Arrays.sort(arr,Comparator.comparingInt(c->c.profit));
+        // then try to make it in decending order which most profit should be on the top
         reverse(arr);
+        //initialize ans var with 0
         int ans =0;
+        //initialize count variable = 0 to keep a track of how many jobs u pickedup to be done.
         int count=0;
+        //we have to give priorities for top profit so assigh the deadline which is available first.
+        //if the the deadline is already filled with some high profit's deadline then check the availability of other deadlines from 1 to current deadLine. 
         HashSet<Integer> set = new HashSet<>();
         for(Job j:arr){
+            //current deadline of the job.
             int deadLine = j.deadline;
+            //if set not contains deadline then add it into set in increment the count and add the profit to sum.
             if(!set.contains(deadLine)){
                 set.add(deadLine);
                 count++;
                 ans+=j.profit;
             }
+            //is deadline already occupied then try to search availability from 1 to current deadline.
             else{
                 while(deadLine>=1){
+                    //if deadline is not occupied then fillit up and increase count by 1 and add profit to sum;
                     if(!set.contains(deadLine)){
                         set.add(deadLine);
                         count++;
@@ -27,9 +37,11 @@ class Solution
                 }
             }
         }
+        //arrange an array of int and store 0 index with count and 1 index with sum.
         int ar[]={count,ans};
         return ar;
     }
+    //simple reverse function.
     static void reverse(Job arr[]){
         int i=0;
         int j = arr.length-1;
