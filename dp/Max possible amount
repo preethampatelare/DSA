@@ -1,0 +1,68 @@
+Question:
+
+Given a row of n coins of values arr[1], arr[2], ... arr[n], where n is even. Geek plays a game against an opponent by alternating turns. In each turn, a player selects either the first or last coin from the row, removes it from the row permanently, and receives the value of the coin. Determine the maximum possible amount geek can get if he moves first.
+
+Note: Both of them play optimally
+
+Example 1:
+
+Input: N = 4, arr[] = {5, 3, 7, 10}
+Output: 15
+Explanation: 
+Geek chooses 10.
+Opponent chooses 7.
+Geek chooses 5.
+Opponent chooses 3.
+Example 2:
+
+Input: N = 4, arr[] = {8, 15, 3, 7}
+Output: 22
+Explanation: 
+Geek chooses 7.
+Opponent chooses 8.
+Geek chooses 15.
+Opponent chooses 3.
+
+Your Task:  
+You don't need to read input or print anything. Complete the function maxAmount() which takes N  and array arr as input parameter and returns the maximum value geek can get.
+
+Expected Time Complexity: O(N2)
+Expected Auxiliary Space: O(N2)
+
+Constraints:
+2 ≤ N ≤ 103
+1 ≤ arr[i] ≤ 105
+
+
+
+
+  Solution :
+
+
+class Solution
+{
+    int maxAmount(int nums[] , int n){
+        int start =0;
+        int end = n-1;
+        int dp[][]=new int[n+1][n+1];
+        for(int d[]:dp){
+            Arrays.fill(d,-1);
+        }
+        if(n==2)return Math.max(nums[0],nums[1]);
+        return function(start,end,nums,dp);
+    }
+    static int function(int start,int end,int nums[],int dp[][]){
+        if(start>end)return 0;
+        int left = Integer.MIN_VALUE;
+        int right = Integer.MIN_VALUE;
+        if(dp[start][end]!=-1)return dp[start][end];
+        //right
+        right = nums[end]+Math.min(function(start,end-2,nums,dp),function(start+1,end-1,nums,dp));
+        //left
+        left = nums[start]+Math.min(function(start+2,end,nums,dp),function(start+1,end-1,nums,dp));
+        return dp[start][end]=Math.max(left,right);
+    }
+    
+        
+}
+
